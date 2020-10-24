@@ -1,0 +1,238 @@
+{
+    "name": "pyflies",
+    "scopeName": "source.pyflies",
+    "patterns": [
+        {"include": "#test"},
+        {"include": "#screen"},
+        {"include": "#flow"},
+        {"include": "#target"},
+        {"include": "#common"}
+    ],
+
+    "repository": {
+        "common": {
+            "patterns": [
+                {"include": "#comment"},
+                {"include": "#common_nocomments"}
+            ]
+        },
+        "common_nocomments": {
+            "patterns": [
+                {"include": "#basetypes"},
+                {"include": "#constants"},
+                {"include": "#language_keyword"},
+                {"include": "#language_operation"}
+            ]
+        },
+
+        "comment":{
+            "patterns": [
+                {
+                    "name": "comment.line",
+                    "match": "//.*$"
+                },
+                {
+                    "name": "comment.block",
+                    "begin": "/\\*",
+                    "end": "\\*/"
+                }
+            ]
+        },
+
+        "basetypes": {
+            "patterns": [
+                {"include": "#string"},
+                {"include": "#number"}
+            ]
+        },
+
+        "constants": {
+            "name": "constant.language",
+            "match": "true|false"
+        },
+
+        "string": {
+            "patterns": [
+                {
+                    "name": "string.quoted.triple",
+                    "begin": "'''",
+                    "end": "'''"
+                },
+                {
+                    "name": "string.quoted.triple",
+                    "begin": "\"\"\"",
+                    "end": "\"\"\""
+                },
+                {
+                    "begin": "'",
+                    "end": "'",
+                    "name": "string.quoted.single",
+					"patterns": [
+						{"include": "source.jinja"}
+					]
+                },
+                {
+                    "begin": "\"",
+                    "end": "\"",
+                    "name": "string.quoted.double",
+					"patterns": [
+						{"include": "source.jinja"}
+					]
+                }
+            ]
+        },
+
+        "number": {
+            "name": "constant.numeric.pyflies",
+            "match": "[0-9.]+"
+        },
+
+        "language_keyword": {
+            "match": "\\b(practice|fix|exec|error|correct|component|abstract|shuffle|extends|symbol|random|choose|string|float|times|point|color|param|with|else|loop|list|time|bool|int|not|and|for|at|if|or)\\b",
+            "name": "keyword"
+        },
+
+        "language_operation": {
+            "match": "\\|(-*\\+)*-+\\||==|->|\\.\\.|<=|>=|!=|:|<|\\*|\\+|\\]|>|\\.|\\(|/|\\[|=|-|,|\\||\\)",
+            "name": "keyword.other"
+        },
+
+        "test": {
+            "begin": "(test)\\s+(\\w+)\\s*(\\{)",
+            "end": "\\}",
+            "beginCaptures": {
+                "1": {"name": "keyword"},
+                "2": {"name": "entity.name.type"},
+                "3": {"name": "keyword.other"}
+            },
+            "endCaptures": {
+                "0": { "name": "keyword.other" }
+            },
+            "patterns": [
+                {"include": "#table"},
+                {"include": "#common"},
+                {"include": "#comp_types"}
+            ]
+        },
+
+        "table": {
+            "begin": "^\\s*(\\|.*)$",
+            "beginCaptures": {
+                "1": {"name": "markup.heading"}
+            },
+            "end": "^\\s*$",
+            "patterns": [
+                {
+                    "match": "^\\s*(\\|-.*)$",
+                    "name": "markup.heading"
+                },
+                {
+                    "begin": "^\\s*(\\|)[^-]",
+                    "beginCaptures": {
+                        "1": {"name": "keyword.other"}
+                    },
+                    "end": "$",
+                    "patterns": [
+                        {"include": "#common_nocomments"}
+                    ]
+                }
+            ]
+        },
+
+        "comp_types": {
+            "begin": "(text|rectangle|circle|line|image|cross|keyboard|mouse|audio|sound)\\s*\\(",
+            "beginCaptures": {
+                "1": {"name": "entity.name.type"}
+            },
+            "end": "\\)",
+            "patterns": [
+                {"include": "#basetypes"},
+                {
+                    "comment": "Component parameters",
+                    "match": "\\b(size|position|content|valid|correct|target|from|to|radius|file|freq|color|fillColor)\\b",
+                    "name": "variable.parameter"
+                }
+            ]
+        },
+
+
+        "screen": {
+            "begin": "(screen)\\s+(\\w+)\\s*(\\{)",
+            "end": "\\}",
+            "contentName": "string.quoted",
+            "beginCaptures": {
+                "1": {"name": "keyword"},
+                "2": {"name": "entity.name.type"},
+                "3": {"name": "keyword.other"}
+            },
+            "endCaptures": {
+                "0": { "name": "keyword.other" }
+            },
+            "patterns": [
+                {"include": "source.jinja"}
+            ]
+        },
+
+        "flow": {
+            "begin": "(flow)\\s*(\\{)",
+            "end": "\\}",
+            "beginCaptures": {
+                "1": {"name": "keyword"},
+                "2": {"name": "keyword.other"}
+            },
+            "endCaptures": {
+                "0": { "name": "keyword.other" }
+            },
+            "patterns": [
+                {"include": "#statement_block"},
+                {"include": "#statement"},
+                {"include": "#table"},
+                {"include": "#common"}
+            ]
+        },
+
+        "statement_block": {
+            "begin": "(repeat)(\\s*\\d+\\s*)?(\\s*times?\\s*)?(\\s*\\{)",
+            "end": "\\}",
+            "beginCaptures": {
+                "1": {"name": "keyword"},
+                "3": {"name": "keyword"},
+                "4": {"name": "keyword.other"}
+            },
+            "endCaptures": {
+                "0": { "name": "keyword.other" }
+            },
+            "patterns": [
+                {"include": "#statement_block"},
+                {"include": "#statement"},
+                {"include": "#table"},
+                {"include": "#common"}
+            ]
+        },
+
+        "statement": {
+            "match": "(show|repeat|execute)(\\s*\\d+\\s*)?(\\s*times?\\s*)?(\\s+\\w+)",
+            "captures": {
+                "1": {"name": "keyword"},
+                "3": {"name": "keyword"},
+                "4": {"name": "entity.name.type"}
+            }
+        },
+
+        "target": {
+            "begin": "(target)\\s+(\\w+)(\\s*{)",
+            "end": "\\}",
+            "beginCaptures": {
+                "1": {"name": "keyword"},
+                "2": {"name": "entity.name.type"},
+                "3": {"name": "keyword.other"}
+            },
+            "endCaptures": {
+                "0": {"name": "keyword.other"}
+            },
+            "patterns": [
+                {"include": "#common"}
+            ]
+        }
+    }
+}
