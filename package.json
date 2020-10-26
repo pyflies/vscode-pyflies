@@ -3,6 +3,11 @@
 	"displayName": "pyflies-vscode",
 	"description": "VS Code extension for pyFlies",
     "publisher": "pyFlies",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/pyflies/vscode-pyflies"
+    },
+    "license": "MIT",
 	"version": "0.0.1",
 	"engines": {
 		"vscode": "^1.50.0"
