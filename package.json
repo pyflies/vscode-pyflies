@@ -1,6 +1,6 @@
 {
-  "name": "pyflies-vscode",
-	"displayName": "pyflies-vscode",
+    "name": "vscode-pyflies",
+	"displayName": "vscode-pyflies",
 	"description": "VS Code extension for pyFlies",
     "publisher": "pyFlies",
     "repository": {
@@ -13,19 +13,13 @@
 		"vscode": "^1.50.0"
 	},
 	"categories": [
-		"Other"
-	],
-	"activationEvents": [
-        "onCommand:pyflies-vscode.helloWorld"
-	],
+        "Programming Languages", "Snippets"
+    ],
+    "activationEvents": [
+        "onLanguage:pyflies"
+    ],
 	"main": "./out/extension.js",
 	"contributes": {
-		"commands": [
-			{
-				"command": "pyflies-vscode.helloWorld",
-				"title": "Hello World"
-			}
-		],
         "grammars": [
             {
                 "language": "pyflies",
@@ -77,7 +71,6 @@
 		"vscode-test": "^1.4.0"
 	},
     "extensionDependencies" : [
-        "samuelcolvin.jinjahtml",
-        "RomanPeshkov.vscode-text-tables"
+        "samuelcolvin.jinjahtml"
     ]
 }
