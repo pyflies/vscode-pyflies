@@ -27,7 +27,8 @@
                 "scopeName": "source.pyflies",
                 "path": "./syntaxes/pyflies.json",
                 "embeddedLanguages": {
-                    "meta.embedded.block.jinja": "jinja"
+                    "string.quoted": "jinja",
+                    "meta.embedded.block.markdown": "markdown"
                 }
             }
         ],

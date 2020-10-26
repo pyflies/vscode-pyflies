@@ -121,6 +121,7 @@
                 "1": {"name": "markup.heading"}
             },
             "end": "^\\s*$",
+            "contentName": "meta.embedded.block.markdown",
             "patterns": [
                 {
                     "match": "^\\s*(\\|-.*)$",
