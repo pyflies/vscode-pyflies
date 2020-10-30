@@ -39,7 +39,8 @@
                 ],
                 "extensions": [
                     ".pf"
-                ]
+                ],
+                "configuration": "./languages/pyflies.language-configuration.json"
             }
         ],
         "snippets": [
