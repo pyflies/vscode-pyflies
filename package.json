@@ -13,7 +13,7 @@
 		"vscode": "^1.50.0"
 	},
 	"categories": [
-        "Programming Languages", "Snippets"
+        "Programming Languages", "Snippets", "Other"
     ],
     "activationEvents": [
         "onLanguage:pyflies",
