@@ -1,6 +1,6 @@
 {
     "name": "vscode-pyflies",
-	"displayName": "vscode-pyflies",
+	"displayName": "pyFlies",
 	"description": "VS Code extension for pyFlies",
     "publisher": "pyFlies",
     "icon": "images/pyflies-logo.png",
