@@ -3,7 +3,7 @@
 	"displayName": "pyFlies",
 	"description": "VS Code extension for pyFlies",
     "publisher": "pyFlies",
-    "icon": "images/pyflies-logo.png",
+    "icon": "pyflies-logo.png",
     "repository": {
         "type": "git",
         "url": "https://github.com/pyflies/vscode-pyflies"

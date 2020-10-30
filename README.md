@@ -24,11 +24,11 @@ Jinja](https://marketplace.visualstudio.com/items?itemName=samuelcolvin.jinjahtm
 
 ## Requirements
 
-pyFlies uses Jinja for screens and strings. Support for Jinja is provided by
-[Better
+pyFlies uses [Jinja](https://jinja.palletsprojects.com/) for screens and
+strings. Support for Jinja is provided by [Better
 Jinja](https://marketplace.visualstudio.com/items?itemName=samuelcolvin.jinjahtml)
-extension. Also, pyFlies renders condition tables using markdown tables syntax.
-As a support for markdown tables [Markdown
+extension. Also, for condition tables pyFlies uses markdown syntax. As a support
+for markdown tables [Markdown
 Table](https://marketplace.visualstudio.com/items?itemName=TakumiI.markdowntable)
 extension is used. Both of these extensions will be automatically installed and
 activated when pyFlies extension is installed.
