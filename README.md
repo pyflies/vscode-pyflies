@@ -8,8 +8,12 @@ VS Code extension for [pyFlies language](https://github.com/pyflies/pyflies).
 ## Features
 
 - Syntax highlighting
-- Convenient condition table editing
+- Convenient condition table editing (using [Markdown
+  Table](https://marketplace.visualstudio.com/items?itemName=TakumiI.markdowntable))
+- Convenient screens/strings editing (using [Better
+Jinja](https://marketplace.visualstudio.com/items?itemName=samuelcolvin.jinjahtml))
 - Code snippets
+
 
 ## Planned
 
@@ -20,14 +24,14 @@ VS Code extension for [pyFlies language](https://github.com/pyflies/pyflies).
 
 ## Requirements
 
-pyFlies uses Jinja for screens and strings. This extension thus depends on
+pyFlies uses Jinja for screens and strings. Support for Jinja is provided by
 [Better
 Jinja](https://marketplace.visualstudio.com/items?itemName=samuelcolvin.jinjahtml)
-to provide syntax highlighting and code completion for strings. Also, pyFlies
-uses markdown tables and for those [Markdown
-Tables](https://marketplace.visualstudio.com/items?itemName=TakumiI.markdowntable)
-extension is used. Both of these dependencies will be automatically installed
-and activated when pyFlies extension is installed.
+extension. Also, pyFlies renders condition tables using markdown tables syntax.
+As a support for markdown tables [Markdown
+Table](https://marketplace.visualstudio.com/items?itemName=TakumiI.markdowntable)
+extension is used. Both of these extensions will be automatically installed and
+activated when pyFlies extension is installed.
 
 
 ## Extension Settings
