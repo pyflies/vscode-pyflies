@@ -16,7 +16,13 @@
         "Programming Languages", "Snippets"
     ],
     "activationEvents": [
-        "onLanguage:pyflies"
+        "onLanguage:pyflies",
+		"onCommand:markdowntable.tsvToTable",
+        "onCommand:markdowntable.format",
+        "onCommand:markdowntable.insertRight",
+        "onCommand:markdowntable.insertLeft",
+        "onCommand:markdowntable.nextCell",
+        "onCommand:markdowntable.prevCell"
     ],
 	"main": "./out/extension.js",
 	"contributes": {
@@ -48,7 +54,68 @@
                 "language": "pyflies",
                 "path": "./snippets/pyflies-snippets.json"
             }
-        ]
+        ],
+		"keybindings": [
+            {
+                "command": "markdowntable.format",
+                "key": "shift+alt+f",
+                "when": "editorLangId == pyflies && editorTextFocus"
+            },
+            {
+                "command": "markdowntable.tsvToTable",
+                "key": "shift+alt+t",
+                "when": "editorLangId == pyflies && editorTextFocus && editorHasSelection"
+            },
+            {
+                "command": "markdowntable.nextCell",
+                "key": "tab",
+                "when": "editorLangId == pyflies && editorTextFocus && !editorReadonly && !editorTabMovesFocus && !suggestWidgetMultipleSuggestions && !suggestWidgetVisible && !inSnippetMode"
+            },
+            {
+                "command": "markdowntable.prevCell",
+                "key": "shift+tab",
+                "when": "editorLangId == pyflies && editorTextFocus && !editorReadonly && !editorTabMovesFocus && !suggestWidgetMultipleSuggestions && !suggestWidgetVisible && !inSnippetMode"
+            }
+        ],
+		"menus": {
+			"editor/context": [
+				{
+					"when": "editorLangId == pyflies",
+					"command": "markdowntable.format",
+					"group": "markdowntable@1"
+				},
+				{
+					"when": "editorLangId == pyflies && editorHasSelection",
+					"command": "markdowntable.tsvToTable",
+					"group": "markdowntable@2"
+				},
+				{
+					"when": "editorLangId == pyflies && !editorHasSelection",
+					"command": "markdowntable.insertRight",
+					"group": "markdowntable@3"
+				},
+				{
+					"when": "editorLangId == pyflies && !editorHasSelection",
+					"command": "markdowntable.insertLeft",
+					"group": "markdowntable@4"
+				},
+				{
+					"when": "editorLangId == pyflies",
+					"command": "markdowntable.alignLeft",
+					"group": "markdowntable@5"
+				},
+				{
+					"when": "editorLangId == pyflies",
+					"command": "markdowntable.alignCenter",
+					"group": "markdowntable@6"
+				},
+				{
+					"when": "editorLangId == pyflies",
+					"command": "markdowntable.alignRight",
+					"group": "markdowntable@7"
+				}
+			]
+		}
 	},
 	"scripts": {
 		"vscode:prepublish": "yarn run compile",
@@ -72,6 +139,7 @@
 		"vscode-test": "^1.4.0"
 	},
     "extensionDependencies" : [
-        "samuelcolvin.jinjahtml"
+        "samuelcolvin.jinjahtml",
+        "TakumiI.markdowntable"
     ]
 }
