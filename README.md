@@ -2,6 +2,10 @@
 
 VS Code extension for [pyFlies language](https://github.com/pyflies/pyflies).
 
+The extension is published on the [VS Code
+marketplace](https://marketplace.visualstudio.com/items?itemName=pyflies.vscode-pyflies)
+and can be installed directly from [VS Code editor](https://code.visualstudio.com/).
+
 ![pyflies editor](https://raw.githubusercontent.com/pyflies/vscode-pyflies/main/images/pyflies-editor.png)
 
 
