@@ -1,83 +1,85 @@
 {
-    "name": "vscode-pyflies",
+	"name": "vscode-pyflies",
 	"displayName": "pyFlies",
 	"description": "VS Code extension for pyFlies",
-    "publisher": "pyFlies",
-    "icon": "pyflies-logo.png",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/pyflies/vscode-pyflies"
-    },
-    "license": "MIT",
-	"version": "0.0.1",
+	"publisher": "pyFlies",
+	"icon": "pyflies-logo.png",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/pyflies/vscode-pyflies"
+	},
+	"license": "MIT",
+	"version": "0.0.2",
 	"engines": {
 		"vscode": "^1.50.0"
 	},
 	"categories": [
-        "Programming Languages", "Snippets", "Other"
-    ],
-    "activationEvents": [
-        "onLanguage:pyflies",
+		"Programming Languages",
+		"Snippets",
+		"Other"
+	],
+	"activationEvents": [
+		"onLanguage:pyflies",
 		"onCommand:markdowntable.tsvToTable",
-        "onCommand:markdowntable.format",
-        "onCommand:markdowntable.insertRight",
-        "onCommand:markdowntable.insertLeft",
-        "onCommand:markdowntable.nextCell",
-        "onCommand:markdowntable.prevCell"
-    ],
+		"onCommand:markdowntable.format",
+		"onCommand:markdowntable.insertRight",
+		"onCommand:markdowntable.insertLeft",
+		"onCommand:markdowntable.nextCell",
+		"onCommand:markdowntable.prevCell"
+	],
 	"main": "./out/extension.js",
 	"contributes": {
-        "grammars": [
-            {
-                "language": "pyflies",
-                "scopeName": "source.pyflies",
-                "path": "./syntaxes/pyflies.json",
-                "embeddedLanguages": {
-                    "string.quoted": "jinja",
-                    "meta.embedded.block.markdown": "markdown"
-                }
-            }
-        ],
-        "languages": [
-            {
-                "id": "pyflies",
-                "aliases": [
-                    "pyFlies"
-                ],
-                "extensions": [
-                    ".pf"
-                ],
-                "configuration": "./languages/pyflies.language-configuration.json"
-            }
-        ],
-        "snippets": [
-            {
-                "language": "pyflies",
-                "path": "./snippets/pyflies-snippets.json"
-            }
-        ],
+		"grammars": [
+			{
+				"language": "pyflies",
+				"scopeName": "source.pyflies",
+				"path": "./syntaxes/pyflies.json",
+				"embeddedLanguages": {
+					"string.quoted": "jinja",
+					"meta.embedded.block.markdown": "markdown"
+				}
+			}
+		],
+		"languages": [
+			{
+				"id": "pyflies",
+				"aliases": [
+					"pyFlies"
+				],
+				"extensions": [
+					".pf"
+				],
+				"configuration": "./languages/pyflies.language-configuration.json"
+			}
+		],
+		"snippets": [
+			{
+				"language": "pyflies",
+				"path": "./snippets/pyflies-snippets.json"
+			}
+		],
 		"keybindings": [
-            {
-                "command": "markdowntable.format",
-                "key": "shift+alt+f",
-                "when": "editorLangId == pyflies && editorTextFocus"
-            },
-            {
-                "command": "markdowntable.tsvToTable",
-                "key": "shift+alt+t",
-                "when": "editorLangId == pyflies && editorTextFocus && editorHasSelection"
-            },
-            {
-                "command": "markdowntable.nextCell",
-                "key": "tab",
-                "when": "editorLangId == pyflies && editorTextFocus && !editorReadonly && !editorTabMovesFocus && !suggestWidgetMultipleSuggestions && !suggestWidgetVisible && !inSnippetMode"
-            },
-            {
-                "command": "markdowntable.prevCell",
-                "key": "shift+tab",
-                "when": "editorLangId == pyflies && editorTextFocus && !editorReadonly && !editorTabMovesFocus && !suggestWidgetMultipleSuggestions && !suggestWidgetVisible && !inSnippetMode"
-            }
-        ],
+			{
+				"command": "markdowntable.format",
+				"key": "shift+alt+f",
+				"when": "editorLangId == pyflies && editorTextFocus"
+			},
+			{
+				"command": "markdowntable.tsvToTable",
+				"key": "shift+alt+t",
+				"when": "editorLangId == pyflies && editorTextFocus && editorHasSelection"
+			},
+			{
+				"command": "markdowntable.nextCell",
+				"key": "tab",
+				"when": "editorLangId == pyflies && editorTextFocus && !editorReadonly && !editorTabMovesFocus && !suggestWidgetMultipleSuggestions && !suggestWidgetVisible && !inSnippetMode"
+			},
+			{
+				"command": "markdowntable.prevCell",
+				"key": "shift+tab",
+				"when": "editorLangId == pyflies && editorTextFocus && !editorReadonly && !editorTabMovesFocus && !suggestWidgetMultipleSuggestions && !suggestWidgetVisible && !inSnippetMode"
+			}
+		],
 		"menus": {
 			"editor/context": [
 				{
@@ -139,8 +141,13 @@
 		"typescript": "^4.0.2",
 		"vscode-test": "^1.4.0"
 	},
-    "extensionDependencies" : [
-        "samuelcolvin.jinjahtml",
-        "TakumiI.markdowntable"
-    ]
+	"extensionDependencies": [
+		"samuelcolvin.jinjahtml",
+		"TakumiI.markdowntable"
+	],
+	"__metadata": {
+		"id": "cfe53463-feff-4c08-8843-1b11585c6a4f",
+		"publisherDisplayName": "pyflies",
+		"publisherId": "4c193804-7472-4934-b1fd-9cc2a2ee2b67"
+	}
 }
