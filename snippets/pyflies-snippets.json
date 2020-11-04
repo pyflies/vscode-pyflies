@@ -4,6 +4,61 @@
         "prefix": "test",
         "body": "test ${1:name} {\n\n    | ${0}    |     |\n    | --- | --- |\n    |     |     |\n\n    fix -> cross()\n    exec-> circle(radius 20)\n}"
     },
+    "screen": {
+        "scope": "pyflies",
+        "prefix": "screen",
+        "body": "screen ${1:name} {\n\t${0}\n}"
+    },
+    "flow": {
+        "scope": "pyflies",
+        "prefix": "flow",
+        "body": "flow {\n\tshow ${1:name}\n\texecute ${2:name}\n\t${0}\n}"
+    },
+    "image": {
+        "scope": "pyflies",
+        "prefix": "image",
+        "body": "image(file \"${1:relativepath}\") for ${2:duration}\n${0}"
+    },
+    "text": {
+        "scope": "pyflies",
+        "prefix": "text",
+        "body": "text(content ${1:content}) for ${2:duration}\n${0}"
+    },
+    "circle": {
+        "scope": "pyflies",
+        "prefix": "circle",
+        "body": "circle(radius ${1:radius}) for ${2:duration}\n${0}"
+    },
+    "line": {
+        "scope": "pyflies",
+        "prefix": "line",
+        "body": "line(from ${1:from}, to ${2:to}) for ${3:duration}\n${0}"
+    },
+    "rectangle": {
+        "scope": "pyflies",
+        "prefix": "rectangle",
+        "body": "rectangle(size ${1:size}) for ${2:duration}\n${0}"
+    },
+    "audio": {
+        "scope": "pyflies",
+        "prefix": "audio",
+        "body": "audio(file ${1:file}) for ${2:duration}\n${0}"
+    },
+    "sound": {
+        "scope": "pyflies",
+        "prefix": "sound",
+        "body": "sound(freq ${1:freq}) for ${2:duration}\n${0}"
+    },
+    "keyboard": {
+        "scope": "pyflies",
+        "prefix": "keyboard",
+        "body": "keyboard(valid [${1:valid}], correct ${2:correct})\n${0}"
+    },
+    "mouse": {
+        "scope": "pyflies",
+        "prefix": "mouse",
+        "body": "mouse(target ${1:target})\n${0}"
+    },
 
     "repeat_with": {
         "scope": "pyflies",
