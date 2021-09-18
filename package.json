@@ -29,6 +29,12 @@
 	],
 	"main": "./out/extension.js",
 	"contributes": {
+		"commands": [
+			{
+			  "command": "countDownBlocking",
+			  "title": "Count down 10 seconds [Blocking]"
+			}
+		  ],
 		"grammars": [
 			{
 				"language": "pyflies",
@@ -127,6 +133,9 @@
 		"watch": "tsc -watch -p ./",
 		"pretest": "yarn run compile && yarn run lint",
 		"test": "node ./out/test/runTest.js"
+	},
+	"dependencies": {
+		"vscode-languageclient": "^7.0.0"
 	},
 	"devDependencies": {
 		"@types/vscode": "^1.50.0",
