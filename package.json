@@ -29,12 +29,6 @@
 	],
 	"main": "./out/extension.js",
 	"contributes": {
-		"commands": [
-			{
-			  "command": "countDownBlocking",
-			  "title": "Count down 10 seconds [Blocking]"
-			}
-		  ],
 		"grammars": [
 			{
 				"language": "pyflies",

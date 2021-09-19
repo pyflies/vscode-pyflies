@@ -5,11 +5,13 @@ from ..util import load_document
 def process_quick_fix(ls, diag, text_document):
     if diag.message.__contains__('Unknown object'):
         obj = diag.message.split('"')[1]
+        obj_type = diag.message.split('"')[3]
 
-        print(obj)
         diag.range.end.character = diag.range.start.character + obj.__len__()
 
-        new_text = determine_fix(obj, load_document(ls, text_document.uri), diag.message)
+        new_text = determine_fix(obj, obj_type, load_document(ls, text_document.uri))
+        if new_text == None: return None
+
         fix = CodeAction(title='Fix typo',
                          kind=CodeActionKind.QuickFix,
                          edit=WorkspaceEdit(
@@ -18,6 +20,18 @@ def process_quick_fix(ls, diag, text_document):
         return [fix]
 
 
-def determine_fix(obj, source, error_message):
-    # TODO: setup logic
-    return 'Real'
+def find(lst, str):
+    return [i for i, x in enumerate(lst) if x.lower() == str.lower()]
+
+def determine_fix(obj, obj_type, source):
+    obj_type = obj_type.replace('Type', '')
+    source_list = source.split()
+    indexes = find(source_list, obj_type)
+
+    possibilities = []
+    for ind in indexes:
+        possibilities.append(source_list[ind+1])
+
+    print(possibilities)
+    matches = difflib.get_close_matches(obj, possibilities)
+    return matches[0] if matches.__len__() > 0 else None
