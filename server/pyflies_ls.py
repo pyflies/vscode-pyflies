@@ -8,11 +8,13 @@ from pygls.server import LanguageServer
 from pygls.lsp import (CompletionItem, CompletionList, CompletionOptions,
                        CompletionParams, DefinitionParams, DidChangeTextDocumentParams,
                        DidOpenTextDocumentParams, CodeActionOptions, CodeActionKind,
-                       CodeActionParams, CodeAction, Command)
+                       CodeActionParams, CodeAction, Command, Location)
+from pygls.workspace import Document
 from .features.validate import validate
 from .features.completion import process_completions, trigger_characters
 from .features.code_actions import process_quick_fix
-from .util import load_document
+from .features.definitions import resolve_definition
+from .util import load_document, get_entire_string_from_index
 
 COUNT_DOWN_START_IN_SECONDS = 12
 COUNT_DOWN_SLEEP_IN_SECONDS = 1
@@ -23,9 +25,6 @@ class PyfliesLanguageServer(LanguageServer):
         super().__init__()
 
 def _validate(ls, params):
-    ls.show_message_log('Validating pyflies...')
-
-    # text_doc = ls.workspace.get_document(params.text_document.uri)
 
     source = load_document(ls, params.text_document.uri)
     diagnostics = validate(source) if source else []
@@ -54,8 +53,12 @@ async def did_open(ls, params: DidOpenTextDocumentParams):
     _validate(ls, params)
 
 @pyflies_server.feature(DEFINITION)
-def definitions(params: DefinitionParams):
-    pass
+def definitions(ls, params: DefinitionParams):
+    # source = load_document(ls, params.text_document.uri)
+    text_doc = ls.workspace.get_document(params.text_document.uri)
+    name = get_entire_string_from_index(text_doc.offset_at_position(params.position), text_doc.source)
+    defs = resolve_definition(text_doc.source, name, params.text_document.uri)
+    return [defs]
 
 @pyflies_server.feature(CODE_ACTION, CodeActionOptions(code_action_kinds=[CodeActionKind.Refactor]))
 def code_actions(ls, params: CodeActionParams) -> Optional[List[Union[Command, CodeAction]]]:
