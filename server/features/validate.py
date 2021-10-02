@@ -5,6 +5,16 @@ from textx import metamodel_for_language
 from pyflies.exceptions import PyFliesException
 from pygls.lsp.types import Diagnostic, Range, Position
 
+def construct_diagnostic(msg, col, line):
+    return Diagnostic(
+            range=Range(
+                start=Position(line=line - 1, character=col - 1),
+                end=Position(line=line - 1, character=col)
+            ),
+            message=msg,
+            source='pyFlies LS'
+        )
+
 def validate(
     model: str
 ) -> List[PyFliesException]:
@@ -27,23 +37,15 @@ def validate(
     try:
         mm = metamodel_for_language('pyflies')
         mm.model_from_str(model)
-    # except PyFliesException as e:
-    #     errors.append(e)
+    except PyFliesException as err:
+        # TODO: How to determine col and line for PyFliesException
+        errors.append(construct_diagnostic(err.args[0], 1, 1))
     except TextXError as err:
-        # errors.append(err)
-
         msg = err.message
         col = err.col
         line = err.line
 
-        d = Diagnostic(
-            range=Range(
-                start=Position(line=line - 1, character=col - 1),
-                end=Position(line=line - 1, character=col)
-            ),
-            message=msg,
-            source='pyFlies LS'
-        )
-
-        errors.append(d)
+        errors.append(construct_diagnostic(msg, col, line))
+    except Exception as e:
+        print(e)
     return errors

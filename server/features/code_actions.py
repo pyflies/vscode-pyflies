@@ -1,6 +1,6 @@
 import difflib
 from pygls.lsp import CodeAction, CodeActionKind, Command, WorkspaceEdit, TextEdit, Range, Position
-from ..util import load_document
+from ..util import load_document, load_document_source
 
 def process_quick_fix(ls, diag, text_document):
     if diag.message.__contains__('Unknown object'):
@@ -9,7 +9,7 @@ def process_quick_fix(ls, diag, text_document):
 
         diag.range.end.character = diag.range.start.character + obj.__len__()
 
-        new_text = determine_fix(obj, obj_type, load_document(ls, text_document.uri))
+        new_text = determine_fix(obj, obj_type, load_document_source(ls, text_document.uri))
         if new_text == None: return None
 
         fix = CodeAction(title='Fix typo',
@@ -32,6 +32,5 @@ def determine_fix(obj, obj_type, source):
     for ind in indexes:
         possibilities.append(source_list[ind+1])
 
-    print(possibilities)
     matches = difflib.get_close_matches(obj, possibilities)
     return matches[0] if matches.__len__() > 0 else None

@@ -14,7 +14,7 @@ from .features.validate import validate
 from .features.completion import process_completions, trigger_characters
 from .features.code_actions import process_quick_fix
 from .features.definitions import resolve_definition
-from .util import load_document, get_entire_string_from_index
+from .util import load_document, get_entire_string_from_index, load_document_source
 
 COUNT_DOWN_START_IN_SECONDS = 12
 COUNT_DOWN_SLEEP_IN_SECONDS = 1
@@ -26,7 +26,7 @@ class PyfliesLanguageServer(LanguageServer):
 
 def _validate(ls, params):
 
-    source = load_document(ls, params.text_document.uri)
+    source = load_document_source(ls, params.text_document.uri)
     diagnostics = validate(source) if source else []
 
     ls.publish_diagnostics(params.text_document.uri, diagnostics)
@@ -35,11 +35,10 @@ def _validate(ls, params):
 pyflies_server = PyfliesLanguageServer()
 
 @pyflies_server.feature(COMPLETION, CompletionOptions(trigger_characters=trigger_characters()))
-def completions(params: CompletionParams):
+def completions(ls, params: CompletionParams):
     """Returns completion items."""
 
-    return process_completions()
-
+    return process_completions(ls, params)
 
 @pyflies_server.feature(TEXT_DOCUMENT_DID_CHANGE)
 def did_change(ls, params: DidChangeTextDocumentParams):

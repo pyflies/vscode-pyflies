@@ -1,7 +1,21 @@
-def load_document(ls, uri):
-    text_doc = ls.workspace.get_document(uri)
+import json
+from textx import metamodel_for_language
 
-    return text_doc.source
+def load_document(ls, uri):
+    return ls.workspace.get_document(uri)
+
+def load_document_source(ls, uri):
+    return load_document(ls, uri).source
+
+def get_model_from_source(model):
+    mm = metamodel_for_language('pyflies')
+    return mm.model_from_str(model)
+
+def load_snippets():
+    snippets = {}
+    with open('snippets/pyflies-snippets.json') as json_file:
+        snippets = json.load(json_file)
+    return snippets
 
 def get_entire_string_from_index(ind, source):
     start_ind = ind

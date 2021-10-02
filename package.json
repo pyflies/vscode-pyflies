@@ -52,12 +52,6 @@
 				"configuration": "./languages/pyflies.language-configuration.json"
 			}
 		],
-		"snippets": [
-			{
-				"language": "pyflies",
-				"path": "./snippets/pyflies-snippets.json"
-			}
-		],
 		"keybindings": [
 			{
 				"command": "markdowntable.format",
