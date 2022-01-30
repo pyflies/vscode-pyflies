@@ -1,16 +1,28 @@
+from turtle import screensize
+from unittest import case
 from pygls.lsp.types.basic_structures import Location, Position
 from textx import metamodel_for_language
 from pygls.lsp import Location, Range, Position
 from ..util import get_model_from_source
 
-def pos_to_range(position):
+def determine_position_from_type(type):
+    if type == 'pyflies.ScreenType':
+        return 'screen '.__len__()
+    elif type == 'pyflies.TestType':
+        return 'test '.__len__()
+    else:
+        return 1
+
+def pos_to_range(position, type, name_len):
+    char_pos = determine_position_from_type(type)
+
     return Range(
-        start=Position(line=position[0]-1, character=position[1]),
-        end=Position(line=position[0]-1, character=position[1]+1)
+        start=Position(line=position[0]-1, character=char_pos),
+        end=Position(line=position[0]-1, character=char_pos+name_len)
     )
 
 def resolve_definition(model, param_name, uri):
     m = get_model_from_source(model)
 
     defs = [x for x in m.routine_types if x.name == param_name]
-    return Location(uri=uri, range=pos_to_range(m._tx_parser.pos_to_linecol(defs[0]._tx_position)))
+    return Location(uri=uri, range=pos_to_range(m._tx_parser.pos_to_linecol(defs[0]._tx_position), defs[0]._tx_fqn, param_name.__len__()))
