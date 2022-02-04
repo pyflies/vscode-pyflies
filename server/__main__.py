@@ -25,12 +25,19 @@ def add_arguments(parser):
         "--port", type=int, default=2087,
         help="Bind to this port"
     )
+    parser.add_argument(
+        "--context-completion", action="store_true",
+        help="Use contextualized completion (might affect performance)"
+    )
 
 
 def main():
     parser = argparse.ArgumentParser()
     add_arguments(parser)
     args = parser.parse_args()
+
+    if args.context_completion:
+        pyflies_server.set_context_completion()
 
     if args.tcp:
         pyflies_server.start_tcp(args.host, args.port)

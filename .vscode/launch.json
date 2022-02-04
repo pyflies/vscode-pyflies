@@ -35,6 +35,19 @@
             }
         },
 		{
+			"name": "Launch Server - Context Completion",
+            "type": "python",
+            "request": "launch",
+            "module": "server",
+            "args": ["--tcp", "--context-completion"],
+            "justMyCode": false,
+            "python": "${command:python.interpreterPath}",
+            "cwd": "${workspaceFolder}",
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            }
+		},
+		{
 			"name": "Extension Tests",
 			"type": "extensionHost",
 			"request": "launch",
@@ -52,6 +65,10 @@
         {
             "name": "Server + Client",
             "configurations": ["Launch Server", "Launch Client"]
+        },
+		{
+            "name": "Server (Context Completion) + Client",
+            "configurations": ["Launch Server - Context Completion", "Launch Client"]
         }
     ]
 }

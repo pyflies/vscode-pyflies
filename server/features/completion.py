@@ -6,27 +6,30 @@ from textx.exceptions import TextXError, TextXSyntaxError
 from textx import metamodel_for_language
 from ..util import load_snippets, load_document, get_model_from_source
 from .validate import construct_diagnostic, validate
-from pygls.lsp import CompletionList, CompletionItem, CompletionParams, CompletionItemKind, InsertTextFormat
+from pygls.lsp import (
+    CompletionList,
+    CompletionItem,
+    CompletionParams,
+    CompletionItemKind,
+    InsertTextFormat,
+)
 
-def trigger_characters():
-    return ['t', 's', 'f', 'i', 'l', 'r', 'a', 'k', 'm']
 
-def filter_snippets(trigger_character, snippets:json):
-    if trigger_character is None:
-        return snippets
-    else:
-        snippets_final = {}
-        for k in snippets.keys():
-            if k.startswith(trigger_character):
-                snippets_final[k] = snippets[k]
-        return snippets_final
+def filter_snippets(doc, position, snippets: json):
+    trigger_character = doc.lines[position.line][position.character - 1]
+    snippets_final = {}
+    for k in snippets.keys():
+        if k.startswith(trigger_character):
+            snippets_final[k] = snippets[k]
+    return snippets_final
+
 
 def check_snippet(snippet, metamodel, model, offset):
 
     # Replaces dynamic parts of the snippet body with a hardcoded variable name to prevent false syntax errors
-    snippet_body = snippet['body'].replace('${0}','')
-    test_body = re.sub('\${([0-9]:[A-Za-z]*|[0-9])}', 'var1', snippet_body)
-    test_source = model[:offset] + test_body + model[offset:]
+    snippet_body = snippet["body"].replace("${0}", "")
+    test_body = re.sub("\${([0-9]:[A-Za-z]*|[0-9])}", "var1", snippet_body)
+    test_source = model[: offset - 1] + test_body + model[offset:]
 
     try:
         metamodel.model_from_str(test_source)
@@ -36,34 +39,35 @@ def check_snippet(snippet, metamodel, model, offset):
 
     return True
 
-def resolve_completion_items(server, snippets, position, uri):
 
-    doc = load_document(server, uri)
-    mm = metamodel_for_language('pyflies')
+def resolve_completion_items(server, snippets, position, doc):
 
+    mm = metamodel_for_language("pyflies")
     offset = doc.offset_at_position(position)
     completion_items = []
 
     for snippet in snippets.values():
 
-        if check_snippet(snippet, mm, doc.source, offset) is False:
-            continue
+        if server.context_completion:
+            if check_snippet(snippet, mm, doc.source, offset) is False:
+                continue
 
-        completion_items.append(CompletionItem(
-            label=snippet['prefix'],
-            kind=CompletionItemKind.Snippet,
-            insert_text=snippet['body'],
-            insert_text_format=InsertTextFormat.Snippet,
-        ))
+        completion_items.append(
+            CompletionItem(
+                label=snippet["prefix"],
+                kind=CompletionItemKind.Snippet,
+                insert_text=snippet["body"],
+                insert_text_format=InsertTextFormat.Snippet,
+            )
+        )
 
     return completion_items
 
+
 def process_completions(server, params: CompletionParams):
 
-    snippets = filter_snippets(params.context.trigger_character, load_snippets())
-    completion_items = resolve_completion_items(server, snippets, params.position, params.text_document.uri)
+    doc = load_document(server, params.text_document.uri)
+    snippets = filter_snippets(doc, params.position, load_snippets())
+    completion_items = resolve_completion_items(server, snippets, params.position, doc)
 
-    return CompletionList(
-        is_incomplete=False,
-        items = completion_items
-    )
+    return CompletionList(is_incomplete=False, items=completion_items)
