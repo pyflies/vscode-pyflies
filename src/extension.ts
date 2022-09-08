@@ -3,6 +3,7 @@
 import * as vscode from 'vscode';
 import * as net from "net";
 import * as path from "path";
+import { installLSWithProgress } from './setup';
 
 import {
     LanguageClient,
@@ -63,7 +64,20 @@ function startLangServer(
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
-export function activate(context: vscode.ExtensionContext) {
+export async function activate(context: vscode.ExtensionContext) {
+    if (isStartedInDebugMode()) {
+        // Development - Run the server manually
+        client = startLangServerTCP(parseInt(process.env.SERVER_PORT || "2087"));
+    } else {
+        // Production - Client is going to run the server (for use within `.vsix` package)
+        try {
+            const python = await installLSWithProgress(context);
+            client = startLangServer(python, ["-m", "pyflies-ls"], context.extensionPath);
+        } catch (err:any) {
+            vscode.window.showErrorMessage(err.toString());
+        }
+    }
+
     if (isStartedInDebugMode()){
         // Development - Run the server manually
         client = startLangServerTCP(2087);

@@ -35,19 +35,6 @@
             }
         },
 		{
-			"name": "Launch Server - Context Completion",
-            "type": "python",
-            "request": "launch",
-            "module": "server",
-            "args": ["--tcp", "--context-completion"],
-            "justMyCode": false,
-            "python": "${command:python.interpreterPath}",
-            "cwd": "${workspaceFolder}",
-            "env": {
-                "PYTHONPATH": "${workspaceFolder}"
-            }
-		},
-		{
 			"name": "Extension Tests",
 			"type": "extensionHost",
 			"request": "launch",
@@ -59,6 +46,21 @@
 				"${workspaceFolder}/out/test/**/*.js"
 			],
 			"preLaunchTask": "${defaultBuildTask}"
+		},
+		{
+			"name": "Launch Client prod",
+			"type": "extensionHost",
+			"request": "launch",
+			"args": [
+				"--extensionDevelopmentPath=${workspaceFolder}"
+			],
+			"outFiles": [
+				"${workspaceFolder}/out/**/*.js"
+			],
+			"preLaunchTask": "${defaultBuildTask}",
+			"env": {
+                "VSCODE_DEBUG_MODE": "false"
+            }
 		}
 	],
 	"compounds": [

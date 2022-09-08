@@ -4,5 +4,6 @@ node_modules
 *.vsix
 code-extensions/
 env/
+pyfliesls/
 __pycache__/
 *.log
