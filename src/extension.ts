@@ -2,14 +2,12 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 import * as net from "net";
-import * as path from "path";
 import { installLSWithProgress } from './setup';
 
 import {
     LanguageClient,
     LanguageClientOptions,
     ServerOptions,
-    TransportKind
 } from 'vscode-languageclient/node';
 
 let client: LanguageClient;
@@ -76,23 +74,6 @@ export async function activate(context: vscode.ExtensionContext) {
         } catch (err:any) {
             vscode.window.showErrorMessage(err.toString());
         }
-    }
-
-    if (isStartedInDebugMode()){
-        // Development - Run the server manually
-        client = startLangServerTCP(2087);
-    } else {
-        // Production - Client is going to run the server (for use within `.vsix` package)
-        const cwd = path.join(__dirname, "..", "..");
-        const pythonPath = vscode.workspace
-            .getConfiguration("python")
-            .get<string>("pythonPath");
-
-        if (!pythonPath) {
-            throw new Error("`python.pythonPath` is not set");
-        }
-
-        client = startLangServer(pythonPath, ["-m", "server"], cwd);
     }
 
     context.subscriptions.push(client.start());
