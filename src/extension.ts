@@ -70,7 +70,7 @@ export async function activate(context: vscode.ExtensionContext) {
         // Production - Client is going to run the server (for use within `.vsix` package)
         try {
             const python = await installLSWithProgress(context);
-            client = startLangServer(python, ["-m", "pyflies-ls"], context.extensionPath);
+            client = startLangServer(python, ["-m", "pyflies_ls"], context.extensionPath);
         } catch (err:any) {
             vscode.window.showErrorMessage(err.toString());
         }

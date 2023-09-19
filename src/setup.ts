@@ -55,10 +55,10 @@ function* installLS(context: ExtensionContext): IterableIterator<string> {
 
   // Get python interpreter
   const python = getPython();
-  // Check python version (3.5+ is required)
-  const [major, minor] = getPythonVersion(python) || [3, 6];
-  if (major !== 3 || minor < 5) {
-    throw new Error("Python 3.5+ is required!");
+  // Check python version (3.7+ is required)
+  const [major, minor] = getPythonVersion(python) || [3, 7];
+  if (major !== 3 || minor < 7) {
+    throw new Error("Python 3.7+ is required!");
   }
 
   // Create virtual environment
@@ -67,9 +67,7 @@ function* installLS(context: ExtensionContext): IterableIterator<string> {
 
   // Install source from wheels
   const venvPython = getPythonFromVenvPath(venv);
-  const wheelsPath = join(context.extensionPath, "wheels");
   installServer(venvPython);
-  // installAllWheelsFromDirectory(venvPython, wheelsPath);
   yield `Successfully installed pyflies-LS.`;
 }
 
