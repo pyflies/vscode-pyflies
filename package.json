@@ -52,12 +52,6 @@
 				"configuration": "./languages/pyflies.language-configuration.json"
 			}
 		],
-		"snippets": [
-			{
-				"language": "pyflies",
-				"path": "./snippets/pyflies-snippets.json"
-			}
-		],
 		"keybindings": [
 			{
 				"command": "markdowntable.format",
@@ -127,6 +121,9 @@
 		"watch": "tsc -watch -p ./",
 		"pretest": "yarn run compile && yarn run lint",
 		"test": "node ./out/test/runTest.js"
+	},
+	"dependencies": {
+		"vscode-languageclient": "^7.0.0"
 	},
 	"devDependencies": {
 		"@types/vscode": "^1.50.0",

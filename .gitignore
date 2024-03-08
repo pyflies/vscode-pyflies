@@ -3,3 +3,7 @@ node_modules
 .vscode-test/
 *.vsix
 code-extensions/
+env/
+pyfliesls/
+__pycache__/
+*.log
